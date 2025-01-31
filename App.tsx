@@ -25,11 +25,17 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 import Main from './src/screens/Main';
+import List from './src/screens/List';
+import { Provider } from 'react-redux';
+import { store } from './src/store/Store';
+import AppNavigation from './src/navigation';
 
 
 function App(): React.JSX.Element {
   return (
-    <Main/>
+    <Provider store={store()}>
+      <AppNavigation/>
+    </Provider>
   );
 }
 

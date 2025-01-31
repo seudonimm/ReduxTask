@@ -8,8 +8,11 @@ import {
 } from 'react-native'
 import { getLocation, stopWatchingLocation, watchLocation } from "../helpers/WeatherHelper";
 import CustomButton from "../components/CustomButton";
+import { useNavigation } from "@react-navigation/native";
 
 const Main = () => {
+
+    const navigation = useNavigation();
 
     const [location, setLocation] = useState();
     const [lat, setLat] = useState(0);
@@ -35,7 +38,7 @@ const Main = () => {
                 console.log(location);
             }
             return () => {
-                console.log("stooopp")
+                console.log("stop")
                 stopWatchingLocation(watchID);
             };
         },[location]
@@ -56,7 +59,16 @@ const Main = () => {
             />
             <Text>
                 {lat}, {lon} 
-            </Text>
+                </Text>
+            <CustomButton
+                text={"To Redux Implementation"}
+                onPress={() => navigation.navigate("List")}
+            />
+            <CustomButton
+                text={"To Redux Implementation - Class"}
+                onPress={() => navigation.navigate("Classes")}
+            />
+            
         </SafeAreaView>
     );
 }
