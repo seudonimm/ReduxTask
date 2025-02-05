@@ -1,7 +1,8 @@
 import Geolocation from "@react-native-community/geolocation";
 
-const locationAuthRequest = () => {
+export const locationAuthRequest = () => {
     Geolocation.requestAuthorization(
         
       )
 }
+

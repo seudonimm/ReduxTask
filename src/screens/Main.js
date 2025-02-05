@@ -1,17 +1,20 @@
 import Geolocation from "@react-native-community/geolocation";
 import React, { useEffect, useState } from "react";
 import { 
+    ActivityIndicator,
+    Alert,
     SafeAreaView, 
     StyleSheet, 
     Text, 
-    TouchableOpacity
+    TouchableOpacity,
+    View
 } from 'react-native'
 import { getLocation, stopWatchingLocation, watchLocation } from "../helpers/WeatherHelper";
 import CustomButton from "../components/CustomButton";
 import { useNavigation } from "@react-navigation/native";
+import withLoading from "../components/hoc/WithLoading";
 
-const Main = () => {
-
+const Main = ({loading, startLoading}) => {
     const navigation = useNavigation();
 
     const [location, setLocation] = useState();
@@ -21,12 +24,14 @@ const Main = () => {
     const [watchID, setWatchID] = useState();
 
     const onGetLocationButton = () => {
-        getLocation(info => setLocation(info))
+        startLoading();
+        getLocation(info => setLocation(info));
         console.log(location);
 
     };
 
     const onWatchLocationButton = () => {
+        startLoading();
         setWatchID(watchLocation(info => setLocation(info)));
     }
 
@@ -50,23 +55,31 @@ const Main = () => {
                 text={"Get Location"}
                 onPress={() => onGetLocationButton()}
             />
+            {loading?
             <Text>
                 {lat}, {lon} 
-            </Text>
+            </Text>:<ActivityIndicator/>
+            }
             <CustomButton
                 text={"Watch Location"}
                 onPress={() => onWatchLocationButton()}
             />
+            {loading?
             <Text>
                 {lat}, {lon} 
-                </Text>
-            <CustomButton
+            </Text>:<ActivityIndicator/>
+            }
+            {/* <CustomButton
                 text={"To Redux Implementation"}
                 onPress={() => navigation.navigate("List")}
             />
             <CustomButton
                 text={"To Redux Implementation - Class"}
                 onPress={() => navigation.navigate("Classes")}
+            /> */}
+            <CustomButton
+                text={"To Map"}
+                onPress={() => navigation.navigate("Map")}
             />
             
         </SafeAreaView>
@@ -84,4 +97,4 @@ const styles = StyleSheet.create({
         borderRadius: 20
     }
 })
-export default Main;
+export default withLoading(Main);
