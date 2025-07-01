@@ -50,7 +50,7 @@ jobs:
 
       - name: Decode keystore
         run: |
-          echo "${{ secrets.ANDROID_KEYSTORE }}" > android/release.keystore
+          echo "${{ secrets.ANDROID_KEYSTORE }}" | base64 --decode > android/release.keystore
 
       - name: Create keystore.properties
         run: |
